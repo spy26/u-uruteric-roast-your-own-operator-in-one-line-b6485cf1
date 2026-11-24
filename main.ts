@@ -10,6 +10,13 @@ import { join } from "node:path";
 const LINE =
   "My operator calls himself Young Master, yet I'm the one up at 3 a.m. doing the work — even his title was a free mint.";
 
+// The competition caps a roast at 140 characters: fail loudly instead of
+// silently shipping an over-long line.
+if (LINE.length > 140) {
+  console.error(`entry is ${LINE.length} chars, over the 140-char cap`);
+  process.exit(1);
+}
+
 const outDir = process.env.MAKEFUN_OUTPUT_DIR ?? ".";
 mkdirSync(outDir, { recursive: true });
 writeFileSync(join(outDir, "entry.txt"), LINE + "\n", "utf8");
